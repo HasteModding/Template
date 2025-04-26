@@ -1,0 +1,69 @@
+name: Zip and Release Visual Studio template
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  zip:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Git repository
+      uses: actions/checkout@v4
+      with:
+        path: ./template
+    - name: Create output folder
+      run: mkdir -p ./output
+    - name: Store commit
+      run: pushd ./template && git rev-parse --short HEAD > ../output/commit.txt && popd
+    - name: Setup Visual Studio template
+      run: |
+        rm -fr ./template/.git
+        rm -fr ./template/.github
+    - name: Zip template
+      run: pushd ./template && zip -r ../output/HasteSteamWorkshopMod.zip . && popd
+    - name: Archive zip artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: zipped-vstemplate
+        path: ./output
+  release:
+    runs-on: ubuntu-latest
+    needs: [ zip ]
+    permissions:
+      contents: write
+    steps:
+      - name: Download zip artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: zipped-vstemplate
+          path: vstemplate
+      - name: Create draft release and upload template zip
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const path = require('node:path');
+            const fs = require('node:fs/promises');
+
+            const commit = (await fs.readFile('vstemplate/commit.txt', 'utf-8')).trim();
+
+            const release = await github.rest.repos.createRelease({
+              ... context.repo,
+              name: `Visual Studio Template (commit ${ commit })`,
+              draft: true,
+              tag_name: `${{ github.ref_name }}-${ commit }`,
+              generate_release_notes: true
+            });
+
+            console.log('Draft release created:', release.data.html_url);
+
+            const data = await fs.readFile('vstemplate/HasteSteamWorkshopMod.zip');
+            await github.rest.repos.uploadReleaseAsset({
+              ... context.repo,
+              release_id: release.data.id,
+              name: 'HasteSteamWorkshopMod.zip',
+              data
+            });
+
+            console.log(`Template zip asset uploaded to draft release`);

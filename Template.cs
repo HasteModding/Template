@@ -5,14 +5,14 @@ using UnityEngine;
 using UnityEngine.Localization;
 using Zorro.Settings;
 
-namespace HelloWorld;
+namespace $safeprojectname$;
 
 [LandfallPlugin]
-public class Program
+public class $safeprojectname$
 {
-    static Program()
+    static $safeprojectname$()
     {
-        Debug.Log("Hello, World!");
+        Debug.Log("Hello from $projectname$!");
 
         On.PlayerCharacter.RestartPlayer_Launch_Transform_float += (orig, self, spawnPoint, minVel) =>
         {
