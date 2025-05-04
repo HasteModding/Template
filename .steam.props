@@ -78,6 +78,11 @@
       Text="SettingsLib: [$(SettingsLibWorkshopDir)]"
       Condition="'$(EnableSettingsLib)'=='true'" />
 
+    <!-- Add references for Haste Managed DLLs -->
+    <ItemGroup Condition="Exists('$(HasteManagedDir)')">
+      <Reference Include="$(HasteManagedDir)/*.dll" Private="false" />
+    </ItemGroup>
+
     <!-- Make every class and property from the game public -->
     <ItemGroup>
       <PackageReference Include="Krafs.Publicizer" Version="2.3.0" PrivateAssets="all" />
