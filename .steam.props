@@ -78,17 +78,23 @@
 			Text="SettingsLib: [$(SettingsLibWorkshopDir)]"
 			Condition="'$(EnableSettingsLib)'=='true'" />
 
-    <!-- Add references for Haste Managed DLLs -->
-    <ItemGroup Condition="Exists('$(HasteManagedDir)')">
-      <Reference Include="$(HasteManagedDir)/*.dll" Private="false" />
+    <!-- Make every class and property from the game public -->
+    <ItemGroup>
+      <PackageReference Include="Krafs.Publicizer" Version="2.3.0" PrivateAssets="all" />
+      <Publicize Include="Assembly-CSharp" />
+      <!--
+      ... Add other DLLs you'd like to publicize here ...
+      Check out Krafs.Publicizer's documentation for more information: https://github.com/krafs/Publicizer#usage
+      -->
     </ItemGroup>
-    
-    <!-- Conditionally add references for the Harmony workshop item -->
+
+    <!-- Conditionally add references for the HarmonyX workshop item -->
     <ItemGroup
       Condition="'$(EnableHarmony)'=='true' and Exists('$(HarmonyWorkshopDir)')">
       <Reference Include="$(HarmonyWorkshopDir)" Private="false" />
-		</ItemGroup>
+    </ItemGroup>
 
+    <!-- Conditionally add references for the SettingsLib workshop item -->
 		<ItemGroup
 			Condition="'$(EnableSettingsLib)'=='true' and Exists('$(SettingsLibWorkshopDir)')">
 			<Reference Include="$(SettingsLibWorkshopDir)" Private="false" />
