@@ -1,23 +1,23 @@
 <VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
-	<TemplateData>
-		<Name>Haste Steam Workshop Mod</Name>
-		<ProjectType>CSharp</ProjectType>
-		<ProjectSubType>
-		</ProjectSubType>
-		<SortOrder>1000</SortOrder>
-		<CreateNewFolder>true</CreateNewFolder>
-		<DefaultName>MyHasteMod</DefaultName>
-		<ProvideDefaultName>true</ProvideDefaultName>
-		<LocationField>Enabled</LocationField>
-		<EnableLocationBrowseButton>true</EnableLocationBrowseButton>
-		<CreateInPlace>true</CreateInPlace>
-	</TemplateData>
-	<TemplateContent>
-		<Project ReplaceParameters="true" TargetFileName="$safeprojectname$.csproj" File="Template.csproj">
-			<ProjectItem ReplaceParameters="false" TargetFileName=".gitignore">.gitignore</ProjectItem>
-			<ProjectItem ReplaceParameters="false" TargetFileName=".steam.props">.steam.props</ProjectItem>
-			<ProjectItem ReplaceParameters="false" TargetFileName="LICENSE">LICENSE</ProjectItem>
+  <TemplateData>
+    <Name>Haste Steam Workshop Mod</Name>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>MyHasteMod</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <CreateInPlace>true</CreateInPlace>
+  </TemplateData>
+  <TemplateContent>
+    <Project ReplaceParameters="true" TargetFileName="$safeprojectname$.csproj" File="Template.csproj">
+      <ProjectItem ReplaceParameters="false" TargetFileName=".gitignore">.gitignore</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName=".steam.props">.steam.props</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="LICENSE">LICENSE</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="$safeprojectname$.cs">Template.cs</ProjectItem>
     </Project>
-	</TemplateContent>
+  </TemplateContent>
 </VSTemplate>

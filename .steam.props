@@ -3,8 +3,8 @@
   <!-- Steam Path Setup -->
   <PropertyGroup>
     <!-- On Windows: attempt to get the Steam install location from the registry -->
-		<_SteamRegPath>HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Valve\Steam</_SteamRegPath>	
-		<SteamInstallPathFromRegistry Condition="'$(OS)' == 'Windows_NT'">$([MSBuild]::GetRegistryValueFromView('$(_SteamRegPath)', 'InstallPath', null, RegistryView.Registry32))</SteamInstallPathFromRegistry>
+    <_SteamRegPath>HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Valve\Steam</_SteamRegPath>  
+    <SteamInstallPathFromRegistry Condition="'$(OS)' == 'Windows_NT'">$([MSBuild]::GetRegistryValueFromView('$(_SteamRegPath)', 'InstallPath', null, RegistryView.Registry32))</SteamInstallPathFromRegistry>
 
     <!-- Use the registry value if available -->
     <SteamDir Condition="'$(OS)' == 'Windows_NT' and '$(SteamInstallPathFromRegistry)' != ''">
@@ -21,11 +21,11 @@
 
     <!-- Haste's App ID -->
     <HasteAppId>1796470</HasteAppId>
-		<HarmonyWorkshopId>3408901301</HarmonyWorkshopId>
-		<SettingsLibWorkshopId>3462196533</SettingsLibWorkshopId>
+    <HarmonyWorkshopId>3408901301</HarmonyWorkshopId>
+    <SettingsLibWorkshopId>3462196533</SettingsLibWorkshopId>
 
-		<EnableHarmony Condition="'$(EnableHarmony)'==''">false</EnableHarmony>
-		<EnableSettingsLib Condition="'$(EnableSettingsLib)'==''">false</EnableSettingsLib>
+    <EnableHarmony Condition="'$(EnableHarmony)'==''">false</EnableHarmony>
+    <EnableSettingsLib Condition="'$(EnableSettingsLib)'==''">false</EnableSettingsLib>
   </PropertyGroup>
 
   <!-- Compute the path to the libraryfolders.vdf file -->
@@ -60,23 +60,23 @@
       <HasteDir>$([MSBuild]::NormalizePath('$(SteamLibraryPath)', 'steamapps', 'common', 'Haste'))</HasteDir>
       <HasteManagedDir>$([MSBuild]::NormalizePath('$(HasteDir)', 'Haste_Data', 'Managed'))</HasteManagedDir>
       <WorkshopDir>$([MSBuild]::NormalizePath('$(SteamLibraryPath)', 'steamapps', 'workshop', 'content', '$(HasteAppId)'))</WorkshopDir>
-			<HarmonyWorkshopDir>$([MSBuild]::NormalizePath('$(WorkshopDir)', '$(HarmonyWorkshopId)', '0Harmony.dll'))</HarmonyWorkshopDir>
-			<SettingsLibWorkshopDir>$([MSBuild]::NormalizePath('$(WorkshopDir)', '$(SettingsLibWorkshopId)', 'SettingsLib.dll'))</SettingsLibWorkshopDir>
+      <HarmonyWorkshopDir>$([MSBuild]::NormalizePath('$(WorkshopDir)', '$(HarmonyWorkshopId)', '0Harmony.dll'))</HarmonyWorkshopDir>
+      <SettingsLibWorkshopDir>$([MSBuild]::NormalizePath('$(WorkshopDir)', '$(SettingsLibWorkshopId)', 'SettingsLib.dll'))</SettingsLibWorkshopDir>
     </PropertyGroup>
 
     <Message Importance="high" Text="Extracted SteamLibraryPath: [$(SteamLibraryPath)]" />
     <Message Importance="high" Text="HasteDir: [$(HasteDir)]" />
     <Message Importance="high" Text="HasteManagedDir: [$(HasteManagedDir)]" />
-		<Message Importance="high" Text="EnableHarmony: [$(EnableHarmony)]" />
-		<Message Importance="high" Text="EnableSettingsLib: [$(EnableSettingsLib)]" />
+    <Message Importance="high" Text="EnableHarmony: [$(EnableHarmony)]" />
+    <Message Importance="high" Text="EnableSettingsLib: [$(EnableSettingsLib)]" />
     <Message
       Importance="high"
       Text="Harmony: [$(HarmonyWorkshopDir)]"
-			Condition="'$(EnableHarmony)'=='true'" />
-		<Message
-			Importance="high"
-			Text="SettingsLib: [$(SettingsLibWorkshopDir)]"
-			Condition="'$(EnableSettingsLib)'=='true'" />
+      Condition="'$(EnableHarmony)'=='true'" />
+    <Message
+      Importance="high"
+      Text="SettingsLib: [$(SettingsLibWorkshopDir)]"
+      Condition="'$(EnableSettingsLib)'=='true'" />
 
     <!-- Make every class and property from the game public -->
     <ItemGroup>
@@ -95,11 +95,11 @@
     </ItemGroup>
 
     <!-- Conditionally add references for the SettingsLib workshop item -->
-		<ItemGroup
-			Condition="'$(EnableSettingsLib)'=='true' and Exists('$(SettingsLibWorkshopDir)')">
-			<Reference Include="$(SettingsLibWorkshopDir)" Private="false" />
-		</ItemGroup>
-	</Target>
+    <ItemGroup
+      Condition="'$(EnableSettingsLib)'=='true' and Exists('$(SettingsLibWorkshopDir)')">
+      <Reference Include="$(SettingsLibWorkshopDir)" Private="false" />
+    </ItemGroup>
+  </Target>
 
 </Project>
 
