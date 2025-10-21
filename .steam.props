@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="RemoveMonoModBackports">
   <!-- Steam Path Setup -->
   <PropertyGroup>
     <!-- On Windows: attempt to get the Steam install location from the registry -->
@@ -103,6 +103,17 @@
     <ItemGroup
       Condition="'$(EnableSettingsLib)'=='true' and Exists('$(SettingsLibWorkshopDir)')">
       <Reference Include="$(SettingsLibWorkshopDir)" Private="false" />
+    </ItemGroup>
+  </Target>
+
+  <!--
+    MonoMod.Backports.dll is required for MonoMod to work, but adding it as a reference causes issues,
+    as it contains a lot of types already included in Unity's standard library mscorlib.dll.
+    Exclude it from the globbed HasteManagedDir references using this snippet.
+   -->
+  <Target Name="RemoveMonoModBackports">
+    <ItemGroup>
+      <Reference Remove="@(Reference)" Condition="$([System.String]::new('%(Reference.Filename)').Contains('Backports'))"/>
     </ItemGroup>
   </Target>
 
